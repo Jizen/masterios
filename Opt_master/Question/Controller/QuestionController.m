@@ -193,8 +193,6 @@ int    questioncurrentPage = 1;
 - (void)requestDataWithPage:(int)page{
     NSString *strUrl = [NSString stringWithFormat:@"%@%d",URL_TOPIC_LIST,page];
     [[HttpTool shareManager] GET:strUrl parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        
-        NSLog(@"responseObject ====== %@",responseObject);
         NSMutableArray *messages = responseObject[@"rows"];
         if (page == 1) {
             [self.dataArray removeAllObjects];

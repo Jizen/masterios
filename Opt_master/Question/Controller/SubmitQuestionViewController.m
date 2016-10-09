@@ -64,13 +64,13 @@
         _textView.tag = 1001;
         _textView.tintColor = PRIMARY_COLOR;
         _textView.placeholderColor = TXT_COLOR;
-        _textView.placeholder = @"写下你遇到的问题（5到49字以内）";
+        _textView.placeholder = @"问题标题[字数限制5~50字]";
     }
     return _textView;
 }
 -(PlaceholderTextView *)addTextView{
     if (!_addTextView) {
-        _addTextView = [[PlaceholderTextView alloc]initWithFrame:CGRectMake(DEFUALT_MARGIN_SIDES,120+45,kWidth-2*DEFUALT_MARGIN_SIDES  , 100)];
+        _addTextView = [[PlaceholderTextView alloc]initWithFrame:CGRectMake(DEFUALT_MARGIN_SIDES,120+65,kWidth-2*DEFUALT_MARGIN_SIDES  , 90)];
         _addTextView.backgroundColor = [UIColor whiteColor];
         _addTextView.delegate = self;
         _addTextView.tag = 1002;
@@ -80,7 +80,7 @@
         _addTextView.textAlignment = NSTextAlignmentLeft;
         _addTextView.editable = YES;
         _addTextView.placeholderColor = TXT_COLOR;
-        _addTextView.placeholder = @"补充说明（选填）";
+        _addTextView.placeholder = @"问题描述[可选]";
     }
     return _addTextView;
 }
@@ -125,12 +125,7 @@
 
 }
 - (void)test:(NSNotification *)notification{
-
-    NSLog(@"ssss === %@",notification.object);
-
     [self.photoArrayM addObject:notification.object];
-    
-    NSLog(@"self.photoArrayM = %@",self.photoArrayM);
     [self.collectionV reloadData];
 
 }
@@ -141,22 +136,15 @@
     [self setupView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(test) name:@"callBackKeyboard" object:nil];
-    
-    
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(keyboardHide:)];
-    //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
     tapGestureRecognizer.cancelsTouchesInView = NO;
-    //将触摸事件添加到当前view
     [self.view addGestureRecognizer:tapGestureRecognizer];
 }
 -(void)keyboardHide:(UITapGestureRecognizer*)tap{
     [self.textView resignFirstResponder];
-
     [self.addTextView resignFirstResponder];
 }
 - (void)test{
-    
-    NSLog(@"123");
     [self.textView resignFirstResponder];
     [self.addTextView resignFirstResponder];
 }
@@ -196,23 +184,21 @@
 }
 - (void)setupView{
     
-    
     self.aView = [[UIView alloc]init];
     _aView.backgroundColor = [UIColor whiteColor];
     _aView.frame = CGRectMake(20, 20+64, self.view.frame.size.width - 40, 180);
     [self.view addSubview:_aView];
-    
 
     [self.view addSubview:self.textView];
     [self.view addSubview:self.addTextView];
     self.wordCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,  160, [UIScreen mainScreen].bounds.size.width - 20, 15)];
     _wordCountLabel.font = [UIFont systemFontOfSize:14.f];
     _wordCountLabel.textColor = [UIColor lightGrayColor];
-    self.wordCountLabel.text = @"0/49";
+    self.wordCountLabel.text = @"0/50";
     self.wordCountLabel.backgroundColor = [UIColor whiteColor];
     self.wordCountLabel.textAlignment = NSTextAlignmentRight;
     [self.view addSubview:_wordCountLabel];
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0,  self.textView.frame.size.height -80, [UIScreen mainScreen].bounds.size.width - 0, 0.5)];
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0,  self.textView.frame.size.height -50, [UIScreen mainScreen].bounds.size.width - 0, 0.5)];
     line.backgroundColor = [UIColor lightGrayColor];
     [self.wordCountLabel addSubview:line];
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -263,7 +249,7 @@
 ///填写意见
 -(void)addLabelText{
     UILabel * labelText = [[UILabel alloc] init];
-    labelText.text = @"问题截图(选填)";
+    labelText.text = @"问题截图[选填]";
     labelText.frame = CGRectMake(10, 320+2*DEFUALT_MARGIN_SIDES*kHeight/667,[UIScreen mainScreen].bounds.size.width - 20, 20);
     labelText.font = [UIFont systemFontOfSize:14.f];
     labelText.textColor = _textView.placeholderColor;
@@ -297,7 +283,7 @@
 {
     if (textView.tag == 1001) {
     NSInteger wordCount = textView.text.length;
-    self.wordCountLabel.text = [NSString stringWithFormat:@"%ld/49",(long)wordCount];
+    self.wordCountLabel.text = [NSString stringWithFormat:@"%ld/50",(long)wordCount];
     [self wordLimit:textView];
     }
 }
@@ -349,8 +335,8 @@
     [self.textView resignFirstResponder];
     [self.addTextView resignFirstResponder];
     
-    if (self.textView.text.length < 5 || self.textView.text.length>49) {
-        [self hudWithTitle:@"问题字数限制在5~49字之间"];
+    if (self.textView.text.length < 5 || self.textView.text.length>50) {
+        [self hudWithTitle:@"问题字数限制在5~50字之间"];
     }else{
 
         [self setupProgressHud];
@@ -396,7 +382,6 @@
 
             
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            NSLog(@"URL_TOPIC_NEW= error = %@",error);
         }];
         
     }
@@ -465,14 +450,10 @@
     if (self.photoArrayM.count < 5) {
         
         [self.collectionV reloadData];
-//        _aView.frame = CGRectMake(20, 20+64, self.view.frame.size.width - 40, 180);
         self.photoBtn.frame = CGRectMake(10 * (self.photoArrayM.count + 1) + (self.view.frame.size.width - 60) / 5 * self.photoArrayM.count, 350, (self.view.frame.size.width - 60) / 5, (self.view.frame.size.width - 60) / 5 + 5);
     }else{
         [self.collectionV reloadData];
-//        self.photoBtn.frame = CGRectMake(0, 0, 0, 0);
         self.photoBtn.frame = CGRectMake(10 * (self.photoArrayM.count -5 + 1) + (self.view.frame.size.width - 60) / 5 * self.photoArrayM.count, 350 + (self.view.frame.size.width - 60) / 5, (self.view.frame.size.width - 60) / 5, (self.view.frame.size.width - 60) / 5 + 5);
-
-        
     }
     self.navigationController.navigationBarHidden = YES;
     

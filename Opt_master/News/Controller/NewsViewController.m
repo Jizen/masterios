@@ -236,7 +236,6 @@ int    currentCollectionPagerOrder1 = 1;
     NSString *strUrl = [NSString stringWithFormat:@"%@%@/page/%d",URL_MY_COLLECTION,category,page];
     
     [[HttpTool shareManager] GET:strUrl parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"rrr === %@",responseObject);
         NSMutableArray *messages = responseObject[@"data"];
         if ([category isEqualToString:@"news"]) {
             for (NSDictionary *dict  in messages) {
@@ -253,8 +252,7 @@ int    currentCollectionPagerOrder1 = 1;
         
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"error = %@",error);
-//        [self ];
+
         [self.attentiontableView.mj_header endRefreshing];
         [self.attentiontableView.mj_footer endRefreshing];
         

@@ -15,7 +15,6 @@
 @property (nonatomic ,strong)UIWebView *webview;
 @property (nonatomic ,strong)UITableView *tableView;
 @property (nonatomic ,strong) NSArray *titleArr1;
-@property (nonatomic ,strong) NSArray *titleArr2;
 
 @property (nonatomic ,strong)NSMutableArray *dataArray;
 @property (nonatomic ,strong)CertModel *model;
@@ -35,17 +34,16 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
-    [self setupMJRefreshHeader];
-
+    [self loadInitDatas];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createNavBar];
     self.titleArr1 = @[@"个人认证",@"证书认证",@"企业认证"];
-    self.titleArr2 = @[@"思科CCIE认证",@"思科CCIE认证"];
     self.view.backgroundColor = BG;
     [self initTableView];
-//    [self setupMJRefreshHeader];
+    [self setupMJRefreshHeader];
+    [self requestData];
 }
 
 #pragma mark - ui
@@ -63,18 +61,16 @@
 }
 
 
-- (void)loadNewDatas{
+
+- (void)loadInitDatas{
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     NSString *userid = [user valueForKey:@"userid"];
     NSString *strUrl = [NSString stringWithFormat:@"%@%@",URL_USER_SHOW,userid];
     [[HttpTool shareManager] GET:strUrl parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        
         self.userData = responseObject[@"data"];
-        [self.tableView.mj_header endRefreshing];
+        [self.tableView reloadData];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [self.tableView.mj_header endRefreshing];
     }];
-    
 }
 
 - (void)setupMJRefreshHeader{
@@ -86,16 +82,15 @@
     [header setTitle:@"全部加载完成" forState:MJRefreshStateNoMoreData];
     header.stateLabel.font = [UIFont systemFontOfSize:12];
     header.stateLabel.textColor = [UIColor grayColor];
-    [header beginRefreshing];
     self.tableView.mj_header = header;
     
 }
 - (void)requestData{
-    [self loadNewDatas];
     [self.dataArray removeAllObjects];
 
     [[HttpTool shareManager] POST:URL_Mycertification_list parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         NSDictionary *data = responseObject[@"data"];
+        
         for (NSDictionary *dict  in data) {
             NSError* err=nil;
             _model = [[CertModel alloc] initWithDictionary:dict error:&err];
@@ -132,13 +127,8 @@
     [navBar addSubview:line];
 }
 - (void)leftAction{
-    
-    
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-
-
 
 
 #pragma mark - delegate
@@ -164,26 +154,28 @@
             cell.imageView.image = [UIImage imageNamed:@"company"];
         }else if(indexPath.row == 0){
             cell.imageView.image = [UIImage imageNamed:@"id-1"];
-//            NSString *idnumber=self.userData[@"idnumber"];
-//            NSString *verifiedon=self.userData[@"verifiedon"];
-            NSNumber *status=self.userData[@"status"];
-
-            if ([status isEqualToNumber:@0]) {
-                cell.stateLabel.text = @"审核中";
-                cell.stateLabel.textColor = [UIColor redColor];
-
-            }else if ([status isEqualToNumber:@1]) {
-                cell.stateLabel.text = @"已认证";
-                cell.stateLabel.textColor = [UIColor redColor];
-                
-            }else if ([status isEqualToNumber:@2]) {
-                cell.stateLabel.text = @"未通过";
-                cell.stateLabel.textColor = [UIColor redColor];
-                
-            }else if (status == nil) {
-                cell.stateLabel.text = @"未认证";
-                cell.stateLabel.textColor = [UIColor redColor];
+            
+            if (self.userData != nil) {
+                NSNumber *status=self.userData[@"status"];
+                NSLog(@"status = %@",status);
+                if ([status isEqualToNumber:@0]) {
+                    cell.stateLabel.text = @"审核中";
+                    cell.stateLabel.textColor = [UIColor redColor];
+                    
+                }else if ([status isEqualToNumber:@1]) {
+                    cell.stateLabel.text = @"已认证";
+                    cell.stateLabel.textColor = [UIColor redColor];
+                    
+                }else if ([status isEqualToNumber:@2]) {
+                    cell.stateLabel.text = @"未通过";
+                    cell.stateLabel.textColor = [UIColor redColor];
+                    
+                }else if (status == nil) {
+                    cell.stateLabel.text = @"未认证";
+                    cell.stateLabel.textColor = [UIColor redColor];
+                }
             }
+
         }else{
             cell.imageView.image = [UIImage imageNamed:@"expert"];
         }
@@ -196,9 +188,8 @@
         .heightIs(20);
 
         if (_dataArray.count == 0) {
-            
         }else{
-        cell.certModel = _dataArray[indexPath.row];
+            cell.certModel = self.dataArray[indexPath.row];
         }
         
     }

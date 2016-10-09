@@ -72,57 +72,48 @@
     [super viewWillAppear:animated];
     self.line.hidden = YES;
     [self requestDataWithPage:self.userid];
-    [self requestReplyWithPage:self.userid];
+    [self requestReplyWithPage:1 userid:self.userid];
+    NSLog(@"self.userid== %d",self.userid);
     self.navigationController.navigationBarHidden = YES;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-
+    
     [self initTableView];
     [self createNavBar];
-//    [self setupProgressHud];
-
-
-//    // 与图像高度一样防止数据被遮挡
+    
+    
+    //    // 与图像高度一样防止数据被遮挡
     self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWidth, 200)];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     self.HeadImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kWidth, 200)];
     self.HeadImgView.backgroundColor = PRIMARY_COLOR;
-//    [self.tableView.tableHeaderView addSubview:self.HeadImgView];
     
     self.tableView.tableHeaderView = self.HeadImgView;
     [self.HeadImgView addSubview:self.headImage];
     [self.HeadImgView addSubview:self.nameLabel];
+    
     self.headImage.sd_layout
     .centerXEqualToView(self.HeadImgView)
     .topSpaceToView(self.HeadImgView,50)
     .widthIs(80)
     .heightIs(80);
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headImageAction)];
-    [self.headImage addGestureRecognizer:tap];
     self.headImage.sd_cornerRadiusFromHeightRatio = @(0.5); // 设置view0的圆角半径为自身高度的0.5倍
-    self.nameLabel.sd_layout
-    .centerXEqualToView(self.HeadImgView)
-    .topSpaceToView(self.headImage,10)
-    .heightIs(20);
-    [self.nameLabel setSingleLineAutoResizeWithMaxWidth:[UIScreen mainScreen].bounds.size.width];
+    
+    
 
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self.tableView registerClass:[QuestionTableViewCell class] forCellReuseIdentifier:TableViewCellId];
-
+    
     
 }
-- (void)headImageAction{
-    
-    [NQXImageBrowswe showImage:self.headImage];//调用方法
 
-}
+
 -(void)viewDidLayoutSubviews {
     if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
         [_tableView setSeparatorInset:UIEdgeInsetsZero];
@@ -214,6 +205,11 @@
 
         [self.headImage sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:[UIImage imageNamed:@"head"]];
         self.nameLabel.text = data[@"nickname"];
+        self.nameLabel.sd_layout
+        .centerXEqualToView(self.HeadImgView)
+        .topSpaceToView(self.headImage,10)
+        .heightIs(20);
+        [self.nameLabel setSingleLineAutoResizeWithMaxWidth:[UIScreen mainScreen].bounds.size.width];
         NSError* err=nil;
         self.mineModel = [[MineModel alloc]initWithDictionary:data error:&err];
         if (_mineModel.tags.length == 0) {
@@ -230,9 +226,9 @@
         
     }];
 }
-- (void)requestReplyWithPage:(int)page{
+- (void)requestReplyWithPage:(int)page userid:(int)userid {
     
-    NSString *url = [NSString stringWithFormat:@"%@%d",URL_MY_REPLY,page];
+    NSString *url = [NSString stringWithFormat:@"%@%d/page/%d",URL_USER_REPLY,userid,page];
     [[HttpTool shareManager] GET:url parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSMutableArray *messages = responseObject[@"rows"];
@@ -292,12 +288,11 @@
         CGRect size = cell.frame;
         size.size.height = _tagList.frame.size.height;
         cell.frame  = size;
-        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         
         if (_mineModel.tags.length == 0) {
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(DEFUALT_MARGIN_SIDES, 0, kWidth, 30)];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(DEFUALT_MARGIN_SIDES, 0, kWidth, 37)];
             label.textColor = TXT_COLOR;
             label.font = GZFontWithSize(12);
             label.text = @"该用户暂没有感兴趣的标签";
@@ -372,9 +367,9 @@
     label.textColor = TXT_COLOR;
     label.font = GZFontWithSize(12);
     if (section == 0 ) {
-        label.text = @"TA感兴趣的标签";
+        label.text = @"TA的标签";
     }else{
-        label.text = @"TA的精彩回答";
+        label.text = @"TA的回答";
     }
     [view addSubview:label];
     return view;

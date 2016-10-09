@@ -21,6 +21,7 @@
 @property (nonatomic, strong) UIProgressView *progressView;
 @property (nonatomic, assign) NSUInteger loadCount;
 @property (nonatomic ,strong) UIButton *backBtn1;
+@property (nonatomic ,strong) UIButton *shareBtn;
 @end
 
 @implementation NewsDetailViewController
@@ -50,10 +51,7 @@
     
     // 发送异步请求
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
-        // response,服务器返回的响应头
-        // data 服务器返回的响应体
-        // connecionError 链接错误
-        // 判断请求是否有错误
+
         if (!connectionError) {
             [self.webView loadRequest:request];
         }else{
@@ -105,6 +103,17 @@
     [self.backBtn1 addTarget:self action:@selector(answerForQuestion:) forControlEvents:UIControlEventTouchUpInside];
     [navBar addSubview:self.backBtn1];
     
+    
+    self.shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.shareBtn.frame = CGRectMake(kWidth - 100, 20, 60, 44);
+    [self.shareBtn setTitle:@"分享" forState:(UIControlStateNormal)];
+    [self.shareBtn setTitleColor:PRIMARY_COLOR forState:UIControlStateNormal];
+    [self.shareBtn setImage:[UIImage imageNamed:@"collect-h"] forState:(UIControlStateSelected)];
+    [self.shareBtn setImage:[UIImage imageNamed:@"collection"] forState:(UIControlStateNormal)];
+    
+    [self.shareBtn addTarget:self action:@selector(shareBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    [navBar addSubview:self.shareBtn];
+    
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 63.5, kWidth, 0.5)];
     line.backgroundColor = SEPARATOR_LINE_COLOR;
     [navBar addSubview:line];
@@ -113,7 +122,9 @@
 - (void)leftAction{
     [self.navigationController popViewControllerAnimated:YES];
 }
-
+- (void)shareBtnAction:(UIButton *)btn{
+    
+}
 - (void)answerForQuestion:(UIButton *)button{
     button.selected = !button.selected;
     if (button.selected == YES) {

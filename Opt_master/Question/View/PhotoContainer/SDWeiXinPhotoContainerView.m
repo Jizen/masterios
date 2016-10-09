@@ -79,8 +79,7 @@
     for (long i = _picPathStringsArray.count; i < self.imageViewsArray.count; i++) {
         UIImageView *imageView = [self.imageViewsArray objectAtIndex:i];
         imageView.hidden = YES;
-        //        UIImageView *image = [_imageViewsArray objectAtIndex:0];
-        //        [image sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",PICTURE_URL,_picPathStringsArray.firstObject]]];
+
     }
     
     if (_picPathStringsArray.count == 0) {
@@ -135,74 +134,7 @@
     self.fixedHeight = @(h);
     self.fixedWith = @(w);
     
-    
-    
-    
-    
-//    _picPathStringsArray = picPathStringsArray;
-//    
-//    for (long i = _picPathStringsArray.count; i < self.imageViewsArray.count; i++) {
-//        UIImageView *imageView = [self.imageViewsArray objectAtIndex:i];
-//        imageView.hidden = YES;
-//    }
-//    
-//    if (_picPathStringsArray.count == 0) {
-//        self.height = 0;
-//        self.fixedHeight = @(0);
-//        return;
-//    }
-//    
-//    CGFloat itemW = [self itemWidthForPicPathArray:_picPathStringsArray];
-//    CGFloat itemH = 0;
-//    if (_picPathStringsArray.count == 1) {
-//
-//    
-//        UIImageView *image = [_imageViewsArray objectAtIndex:0];
-//        [image sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",PICTURE_URL,_picPathStringsArray.firstObject]]];
-//        
-//
-//        if (image.size.width) {
-//            itemH = image.size.height / image.size.width * itemW;
-//        }
-//    } else {
-//        
-//        itemH = itemW;
-//    }
-//    long perRowItemCount = [self perRowItemCountForPicPathArray:_picPathStringsArray];
-//    CGFloat margin = DEFUALT_MARGIN_SIDES;
-//    
-//    [_picPathStringsArray enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//        
-//        
-//        long columnIndex = idx % perRowItemCount;
-//        long rowIndex = idx / perRowItemCount;
-//        UIImageView *imageView = [_imageViewsArray objectAtIndex:idx];
-//        imageView.hidden = NO;
-//        NSString *imageStr = [NSString stringWithFormat:@"%@%@",PICTURE_URL,_picPathStringsArray[idx]];
-////        [imageView sd_setImageWithURL:[NSURL URLWithString:imageStr] ];
-//        [imageView sd_setImageWithURL:[NSURL URLWithString:imageStr] placeholderImage:[UIImage imageNamed:@"pictureHolder"]];
-//        imageView.frame = CGRectMake(columnIndex * (itemW + margin), rowIndex * (itemH + margin), itemW, itemH);
-//
-//        
-//                //判断是多张图片还是一张图片
-//                if (_picPathStringsArray.count > 1) {
-//                    imageView.frame = CGRectMake(columnIndex * (itemW + margin), rowIndex * (itemH + margin), itemW, itemH);
-//                }else{
-//                    imageView.frame = CGRectMake(columnIndex * (itemW + margin), rowIndex * (itemH + margin), 100, 100);
-//                }
-//        
-//                [self addSubview:imageView];
-//  
-//    }];
-//    
-//    CGFloat w = perRowItemCount * itemW + (perRowItemCount - 1) * margin;
-//    int columnCount = ceilf(_picPathStringsArray.count * 1.0 / perRowItemCount);
-//    CGFloat h = columnCount * itemH + (columnCount - 1) * margin;
-//    self.width = w;
-//    self.height = h;
-//    
-//    self.fixedHeight = @(h);
-//    self.fixedWith = @(w);
+
 }
 
 

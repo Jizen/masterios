@@ -67,7 +67,7 @@ int currentReplyPage = 1;
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
     [self requestDataWithPage:1];
-    [self.tableView.mj_header beginRefreshing];
+//    [self.tableView.mj_header beginRefreshing];
 
 }
 
@@ -184,7 +184,6 @@ int currentReplyPage = 1;
             [self.dataArray removeAllObjects];
         }
         for (NSDictionary *dict  in messages) {
-            
             NSError* err=nil;
             _answerModel = [[AnswerModel alloc]initWithDictionary:dict error:&err];
             [self.dataArray addObject:_answerModel];
@@ -193,13 +192,9 @@ int currentReplyPage = 1;
         [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
-        
-        if (messages.count == 0 && page != 1) {
-            [self hudWithTitle:@"没有更多数据"];
-        }
+
 
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//        [self hudWithTitle:@"访问服务器失败"];
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
     }];
@@ -345,7 +340,11 @@ int currentReplyPage = 1;
     if (indexPath.section == 1) {
 
         AnswerCell *cell = [AnswerCell cellWithTableView:tableView];
-        cell.model = _dataArray[indexPath.row];
+        cell.model = self.dataArray[indexPath.row];
+        NSLog(@"self.dataArray === %@",self.dataArray);
+        
+        
+        
         UITapGestureRecognizer *headImageTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headImageTapAction:)];
         [cell.headImage addGestureRecognizer:headImageTap];
         UITapGestureRecognizer *nameTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headImageTapAction:)];
@@ -359,7 +358,6 @@ int currentReplyPage = 1;
         
         AnswerTopCell *topCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([AnswerTopCell class])];
 
-//        AnswerTopCell * topCell = [AnswerTopCell cellWithTableView:tableView];
         topCell.selectionStyle = UITableViewCellSelectionStyleNone;
 
         topCell.model = self.model;

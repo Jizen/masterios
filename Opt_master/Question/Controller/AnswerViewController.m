@@ -142,11 +142,7 @@
     if (self.answerView.text.length == 0) {
         [self hudWithTitle:@"请输入回答内容"];
     }else{
-        
-//        NSString *sss  = [self.answerView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-
         NSDictionary *topic = @{@"topicid": self.itemID,@"content":self.answerView.text,};
-
         [[HttpTool shareManager] POST:URL_REPLY_NEW parameters:topic success:^(NSURLSessionDataTask *task, id responseObject) {
             NSLog(@"URL_REPLY_NEW : %@",responseObject);
             NSDictionary *data = responseObject[@"data"];
@@ -158,17 +154,14 @@
 
                 }else{
                     _passValue(self.model.replynum);
-                    NSLog(@"回答个数 ： %@",self.model.replynum);
                 }
+                [self dismissViewControllerAnimated:YES completion:nil];
+                [self.navigationController popViewControllerAnimated:YES];
+                [self.answerView resignFirstResponder];
             }
 
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            NSLog(@"error = %@",error);
-
         }];
-            [self dismissViewControllerAnimated:YES completion:nil];
-            [self.navigationController popViewControllerAnimated:YES];
-            [self.answerView resignFirstResponder];
     }
 }
 

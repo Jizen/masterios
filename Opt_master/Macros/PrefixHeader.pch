@@ -40,6 +40,8 @@
 
 #define  URL_MY_REPLY [NSString stringWithFormat:@"%@",@"topic/myreply/page/"]  /*我的回答*/
 
+#define  URL_USER_REPLY [NSString stringWithFormat:@"%@",@"topic/userreply/"]  /*用户的回答*/
+
 #define  URL_MY_COLLECTION [NSString stringWithFormat:@"%@",@"favorite/my/"]    /*我的收藏*/
 
 #define  URL_LOGIN [NSString stringWithFormat:@"%@",@"user/login"]  /*登录*/
@@ -78,7 +80,10 @@
 
 #define URL_Mycertification_DEL [NSString stringWithFormat:@"%@",@"certification/delete?ids="]
 
-//
+
+#define URL_FUZZY [NSString stringWithFormat:@"%@",@"topic/fuzzy"]
+
+//topic/fuzzy
 // ============================= 样式 =====================================
 
 #define SECRETKEY @"123456"

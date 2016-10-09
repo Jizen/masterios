@@ -17,7 +17,8 @@
 #import "IANWebViewController.h"
 #import "JWLaunchAd.h"
 #import "LBLaunchImageAdView.h"
-
+#import "UMMobClick/MobClick.h"
+//#import "UMMob"
 #define DEFAULT_CITY @"北京市"
 #define BUNDLE_IDENTIFIER [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"]
 static AppDelegate *_appDelegate;
@@ -62,27 +63,27 @@ static AppDelegate *_appDelegate;
         
     }];
 
-
-    
-
-//    [self performSelector:@selector(showad) withObject:nil afterDelay:0.43];
-
     [self setNavigation];
-    
     [self isFirst];
     [self showad];
-
     [self allowLocation];
     [self addLuanchImage];
 
+    [MobClick setLogEnabled:YES];  // 打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
+    [MobClick setAppVersion:XcodeAppVersion]; //参数为NSString * 类型,自定义app版本信息，如果不设置，默认从CFBundleVersion里取
 
+    
+    UMConfigInstance.appKey = @"57f9a972e0f55abc5000201a";
+    UMConfigInstance.channelId = @"App Store";
+    [MobClick startWithConfigure:UMConfigInstance];//配置以上参数后调用此方法初始化SDK！
+    [MobClick profileSignInWithPUID:@"playerID"];
+    [MobClick setEncryptEnabled:YES];
     return YES;
 }
 
 
 - (void)showad{
     
-//    NSString *picUrl = @"http://785j3g.com1.z0.glb.clouddn.com/d659db60-f.jpg";
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     NSString *ss = [user objectForKey:@"imageurl"];
     NSString *userDefaultKey = @"download_key";

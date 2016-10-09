@@ -99,7 +99,7 @@ static int k = 10000;
         [[NSNotificationCenter defaultCenter] postNotification:notice];
     
     myActionSheet = [[UIActionSheet alloc]
-                     initWithTitle:@"提示"
+                     initWithTitle:nil
                      delegate:self
                      cancelButtonTitle:@"取消"
                      destructiveButtonTitle:nil

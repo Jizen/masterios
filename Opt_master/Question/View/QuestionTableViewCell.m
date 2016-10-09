@@ -34,16 +34,22 @@
     
     [self.contentView sd_addSubviews:views];
     
+    [self addConstraint];
+}
 
+
+- (void)addConstraint{
     
-
+    
+    
     self.questionLabel.sd_layout
     .topSpaceToView(self.contentView,DEFUALT_MARGIN_SIDES)
     .leftSpaceToView(self.contentView,DEFUALT_MARGIN_SIDES)
     .rightSpaceToView(self.contentView,DEFUALT_MARGIN_SIDES)
     .autoHeightRatio(0);
-    
+
     self.picContainerView.sd_layout
+    
     .leftEqualToView(_questionLabel); // 已经在内部实现宽度和高度自适应所以不需要再设置宽度高度，top值是具体有无图片在setModel方法中设置
     
     self.timeLabel.sd_layout
@@ -51,7 +57,7 @@
     .topSpaceToView(_picContainerView, DEFUALT_MARGIN_SIDES)
     .heightIs(15);
     [self.timeLabel setSingleLineAutoResizeWithMaxWidth:[UIScreen mainScreen].bounds.size.width];
-
+    
     
     self.tagImage.sd_layout
     .centerYEqualToView(self.timeLabel)
@@ -72,7 +78,7 @@
     .rightSpaceToView(self.contentView,0)
     .widthIs(70)
     .heightIs(40);
-
+    
     
     self.headImage.sd_layout
     .centerYEqualToView(self.answerBtn)
@@ -115,9 +121,6 @@
     .rightEqualToView(self.nameLabel);
 }
 
-
-
-
 - (void)setModel:(QuestionModel *)model{
 //    [self sd_clearViewFrameCache];
 
@@ -145,7 +148,7 @@
     }
 
     _picContainerView.picPathStringsArray = tags;
-    
+    NSLog(@"tttt = %@",tags);
     CGFloat picContainerTopMargin = 0;
     if (tags.count) {
         picContainerTopMargin = 10;
