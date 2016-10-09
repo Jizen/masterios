@@ -21,15 +21,10 @@
 //        NSString *appName = [user objectForKey:@"appname"];
 
     
-    NSLog(@"userid === %@",userid);
         if (baseUrl== nil) {
             baseUrl = BASE_URL;
         }
-//    if (appName== nil) {
-//        appName = @"";
-//    }
-//    NSLog(@"BASE_URL  =  %@",baseUrl);
-//    NSLog(@"appName  =  %@",appName);
+
 
 
     manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",baseUrl,APP_NAME]]];

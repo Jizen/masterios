@@ -33,10 +33,15 @@
     [super viewDidLoad];
     self.title = @"资讯详情";
     self.view.backgroundColor = [UIColor whiteColor];
+
     [self createNavBar];
-    [self statusShow];
+//    [self statusShow];
+    
+    NSLog(@"iiiii = %d",self.iscollect);
+    self.backBtn1.selected = self.iscollect;
+
     WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 64, kWidth, kHeight)];
-    webView.navigationDelegate = self;//需要实现 <span style="font-family: monospace; white-space: pre; background-color: rgb(240, 240, 240);">WKNavigationDelegate </span>
+    webView.navigationDelegate = self;
     [webView loadRequest:[NSURLRequest requestWithURL:
                           [NSURL URLWithString:self.url]]];
     

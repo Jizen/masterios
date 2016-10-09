@@ -201,6 +201,7 @@
 
         
         NSDictionary *data = responseObject[@"data"];
+        
         NSString *headUrl =[NSString stringWithFormat:@"%@",data[@"avatar"]] ;
 
         [self.headImage sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:[UIImage imageNamed:@"head"]];
@@ -217,8 +218,8 @@
         }else{
             strArray = [_mineModel.tags componentsSeparatedByString:@","];
             [_tagList removeFromSuperview];
-        
         }
+        
         [self.hud hideAnimated:YES];
 
         [self.tableView reloadData];

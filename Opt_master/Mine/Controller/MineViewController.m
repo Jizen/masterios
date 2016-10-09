@@ -103,7 +103,7 @@ static CGFloat const headViewHeight = 256;
     self.imageArr1 = @[@"my-question",@"my-answer"];
     self.titleArr1 = @[@"我的提问",@"我的回答"];
     self.imageArr2 = @[@"interest",@"collect"];
-    self.titleArr2 = @[@"我的收藏",@"兴趣标签"];
+    self.titleArr2 = @[@"我的收藏",@"我的标签"];
     
 
     

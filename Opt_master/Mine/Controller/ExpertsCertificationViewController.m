@@ -87,10 +87,11 @@
 }
 - (void)requestData{
     [self.dataArray removeAllObjects];
-
+    [self loadInitDatas];
     [[HttpTool shareManager] POST:URL_Mycertification_list parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         NSDictionary *data = responseObject[@"data"];
         
+        NSLog(@"data === %@",data);
         for (NSDictionary *dict  in data) {
             NSError* err=nil;
             _model = [[CertModel alloc] initWithDictionary:dict error:&err];

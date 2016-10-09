@@ -59,6 +59,8 @@ int    currentCollectionPagerOrder1 = 1;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+    [self requestDataWithPage:1 category:@"news"];
+    [self requestDataWithPage:1];
     //获取UserDefault
     NSUserDefaults *userDefault     = [NSUserDefaults standardUserDefaults];
     NSString *name                  = [userDefault objectForKey:@"cityName"];
@@ -134,10 +136,6 @@ int    currentCollectionPagerOrder1 = 1;
         [self.tableView.mj_footer endRefreshing];
         [self.attentiontableView.mj_header endRefreshing];
         [self.attentiontableView.mj_footer endRefreshing];
-        
-//        if (messages.count == 0) {
-//            [self hudWithTitle:@"没有更多数据"];
-//        }
         [self.hud hideAnimated:YES];
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -157,7 +155,6 @@ int    currentCollectionPagerOrder1 = 1;
     [header setTitle:@"全部加载完成" forState:MJRefreshStateNoMoreData];
     header.stateLabel.font = [UIFont systemFontOfSize:12];
     header.stateLabel.textColor = [UIColor grayColor];
-    [header beginRefreshing];
     self.tableView.mj_header = header;
     
     
@@ -230,13 +227,14 @@ int    currentCollectionPagerOrder1 = 1;
 #pragma mark - request
 - (void)requestDataWithPage:(int)page category:(NSString *)category{
     
-    [self.dataArray  removeAllObjects];
+//    [self.dataArray  removeAllObjects];
     [self.topicArray removeAllObjects];
     
     NSString *strUrl = [NSString stringWithFormat:@"%@%@/page/%d",URL_MY_COLLECTION,category,page];
     
     [[HttpTool shareManager] GET:strUrl parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         NSMutableArray *messages = responseObject[@"data"];
+        
         if ([category isEqualToString:@"news"]) {
             for (NSDictionary *dict  in messages) {
                 NSError* err=nil;
@@ -348,6 +346,7 @@ int    currentCollectionPagerOrder1 = 1;
             break;
         case 1:
             _scrollview.contentOffset=CGPointMake(kWidth, 0);
+            [self requestDataWithPage:1 category:@"news"];
             break;
     }
     
@@ -400,13 +399,39 @@ int    currentCollectionPagerOrder1 = 1;
     return 120;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     NewsDetailViewController *detail = [[NewsDetailViewController alloc] init];
-    NewsModel *model = _dataArray[indexPath.row];
-    detail.url = model.content;
-    detail.itemId = model.id;
-    self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:detail animated:YES];
-    self.hidesBottomBarWhenPushed = NO;
+       if (tableView.tag == 200) {
+           NewsModel *model = self.dataArray[indexPath.row];
+           detail.url = model.content;
+           detail.itemId = model.id;
+       }
+    
+    if(tableView.tag == 201){
+        NewsModel *model = self.topicArray[indexPath.row];
+        detail.url = model.content;
+        detail.itemId = model.id;
+    }
+    
+    NSString *url = [NSString stringWithFormat:@"%@=%@",URL_NEWS_STATE_SHOW,detail.itemId];
+    [[HttpTool shareManager] GET:url parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSNumber *code = responseObject[@"code"];
+        if ([code isEqualToNumber:@403]) {
+            detail.iscollect = YES;
+        }else{
+            detail.iscollect = NO;
+        }
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:detail animated:YES];
+        self.hidesBottomBarWhenPushed = NO;
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:detail animated:YES];
+        self.hidesBottomBarWhenPushed = NO;
+    }];
+
+    
+   
 
 }
 

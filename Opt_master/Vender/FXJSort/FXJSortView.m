@@ -169,7 +169,7 @@
             CGFloat btnX = distance + (buttonWidth + distance) * ((nowWeiZhi-1) % numOfRow);
             CGFloat btnY = (buttonHeight + distance) * ((nowWeiZhi-1) / numOfRow);
 
-            [UIView animateWithDuration:0.3 animations:^{
+            [UIView animateWithDuration:0 animations:^{
                 button.frame = CGRectMake(btnX, firstSectionHeght+sectionHeight+btnY, buttonWidth, buttonHeight);
             }];
     }

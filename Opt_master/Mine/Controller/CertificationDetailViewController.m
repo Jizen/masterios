@@ -34,6 +34,8 @@
 @property (nonatomic ,copy)NSString *handingUrl;
 @property (nonatomic ,copy)NSString *certUrl;
 
+@property (nonatomic ,strong) MBProgressHUD *hud;
+
 @end
 
 @implementation CertificationDetailViewController
@@ -41,6 +43,9 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
 }
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     if ([self.titles isEqualToString:@"企业认证"]) {
@@ -57,6 +62,16 @@
     tapGestureRecognizer.cancelsTouchesInView = NO;
     //将触摸事件添加到当前view
     [self.view addGestureRecognizer:tapGestureRecognizer];
+}
+- (void)setupProgressHud
+{
+    self.hud = [[MBProgressHUD alloc] initWithView:self.view] ;
+    self.hud.label.text=@"正在上传...";
+    _hud.frame = self.view.bounds;
+    _hud.minSize = CGSizeMake(100, 100);
+    _hud.mode = MBProgressHUDModeIndeterminate;
+    [self.view addSubview:_hud];
+    [_hud showAnimated:YES];
 }
 
 // 收键盘
@@ -423,104 +438,57 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+
     self.imageView3.image = info[UIImagePickerControllerEditedImage];
     [picker dismissViewControllerAnimated:NO completion:^{
-        if ([self.image_type isEqualToString:@"front"]) {
-            NSString *url = [NSString stringWithFormat:@"%@%@/%@",URL_certification,self.cert_type,@"front"];
-            [[HttpTool shareManager] POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                NSData *imageData = UIImageJPEGRepresentation(self.imageView3.image, 0.006);
-                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                [formatter setDateFormat:@"yyyyMMddHHmmss"];
-                NSString *dateString = [formatter stringFromDate:[NSDate date]];
-                NSString *fileName = [NSString  stringWithFormat:@"%@.png", dateString];
-                [formData appendPartWithFileData:imageData name:@"file" fileName:fileName mimeType:@"image/png"]; //
-                
-            } success:^(NSURLSessionDataTask *task, id responseObject) {
-                    self.frontUrl = [NSString stringWithFormat:@"%@",url];
-                    NSLog(@"111111 == %@",self.frontUrl);
-            } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            }];
-        }
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
         
-        if ([self.image_type isEqualToString:@"reverse"]) {
+        [self setupProgressHud];
+        NSString *url = [NSString stringWithFormat:@"%@%@/%@",URL_certification,self.cert_type,self.image_type];
+        
+        NSLog(@"url --- %@",url);
+        
+        
+
+//        NSURLSessionDataTask *dataTask = [[HttpTool shareManager] dataTaskWithRequest:<#(NSURLRequest *)#> completionHandler:<#^(NSURLResponse *response, id responseObject, NSError *error)completionHandler#>];
+        
+        
+
+        
+        
+        [[HttpTool shareManager] POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            NSData *imageData = UIImageJPEGRepresentation(self.imageView3.image, 0.006);
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"yyyyMMddHHmmss"];
+            NSString *dateString = [formatter stringFromDate:[NSDate date]];
+            NSString *fileName = [NSString  stringWithFormat:@"%@.png", dateString];
+            [formData appendPartWithFileData:imageData name:@"file" fileName:fileName mimeType:@"image/png"]; //
             
-            NSString *url = [NSString stringWithFormat:@"%@%@/%@",URL_certification,self.cert_type,@"reverse"];
-            
-            [[HttpTool shareManager] POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                NSData *imageData = UIImageJPEGRepresentation(self.imageView3.image, 0.006);
-                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                [formatter setDateFormat:@"yyyyMMddHHmmss"];
-                NSString *dateString = [formatter stringFromDate:[NSDate date]];
-                NSString *fileName = [NSString  stringWithFormat:@"%@.png", dateString];
-                [formData appendPartWithFileData:imageData name:@"file" fileName:fileName mimeType:@"image/png"]; //
-                
-            } success:^(NSURLSessionDataTask *task, id responseObject) {
+        } success:^(NSURLSessionDataTask *task, id responseObject) {
+            NSLog(@"URL_TOPIC_NEW = responseObject = %@",responseObject);
+            [self.hud hideAnimated:YES];
+            NSString *url = responseObject[@"msg"];
+            if ([self.image_type isEqualToString:@"front"]) {
+                self.frontUrl = [NSString stringWithFormat:@"%@",url];
+            }else if ([self.image_type isEqualToString:@"reverse"]){
                 self.reverseUrl = [NSString stringWithFormat:@"%@",url];
-                NSLog(@"22222 == %@",self.reverseUrl);
-            } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            }];
-        }
-        
-        if ([self.image_type isEqualToString:@"handing"]) {
-            
-            NSString *url = [NSString stringWithFormat:@"%@%@/%@",URL_certification,self.cert_type,@"handing"];
-            
-            [[HttpTool shareManager] POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                NSData *imageData = UIImageJPEGRepresentation(self.imageView3.image, 0.006);
-                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                [formatter setDateFormat:@"yyyyMMddHHmmss"];
-                NSString *dateString = [formatter stringFromDate:[NSDate date]];
-                NSString *fileName = [NSString  stringWithFormat:@"%@.png", dateString];
-                [formData appendPartWithFileData:imageData name:@"file" fileName:fileName mimeType:@"image/png"]; //
-                
-            } success:^(NSURLSessionDataTask *task, id responseObject) {
+            }else if ([self.image_type isEqualToString:@"handing"]){
                 self.handingUrl = [NSString stringWithFormat:@"%@",url];
-                NSLog(@"33333 == %@",self.handingUrl);
-            } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            }];
-            
-        }
-        
-        if ([self.image_type isEqualToString:@"cert"]) {
-            
-            NSString *url = [NSString stringWithFormat:@"%@%@/%@",URL_certification,self.cert_type,@"cert"];
-            
-            [[HttpTool shareManager] POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                NSData *imageData = UIImageJPEGRepresentation(self.imageView3.image, 0.006);
-                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                [formatter setDateFormat:@"yyyyMMddHHmmss"];
-                NSString *dateString = [formatter stringFromDate:[NSDate date]];
-                NSString *fileName = [NSString  stringWithFormat:@"%@.png", dateString];
-                [formData appendPartWithFileData:imageData name:@"file" fileName:fileName mimeType:@"image/png"]; //
-                
-            } success:^(NSURLSessionDataTask *task, id responseObject) {
+            }else if ([self.image_type isEqualToString:@"cert"]){
                 self.certUrl = [NSString stringWithFormat:@"%@",url];
-                NSLog(@"111111 == %@",self.certUrl);
-            } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            }];
-            
-        }
-        
-        
-        if ([self.image_type isEqualToString:@"company_cert"]) {
-            
-            NSString *url = [NSString stringWithFormat:@"%@%@/%@",URL_certification,self.cert_type,@"company_cert"];
-            
-            [[HttpTool shareManager] POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                NSData *imageData = UIImageJPEGRepresentation(self.imageView3.image, 0.006);
-                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                [formatter setDateFormat:@"yyyyMMddHHmmss"];
-                NSString *dateString = [formatter stringFromDate:[NSDate date]];
-                NSString *fileName = [NSString  stringWithFormat:@"%@.png", dateString];
-                [formData appendPartWithFileData:imageData name:@"file" fileName:fileName mimeType:@"image/png"]; //
-                
-            } success:^(NSURLSessionDataTask *task, id responseObject) {
+            }else if ([self.image_type isEqualToString:@"company_cert"]){
                 self.certUrl = [NSString stringWithFormat:@"%@",url];
-                NSLog(@"111111 == %@",self.certUrl);
-            } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            }];
-        }
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+            NSLog(@"error == %@",error);
+        }];
+        
+        
+        
+    
     }];
+
 }
 #pragma mark - delegate
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
