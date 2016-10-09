@@ -1,0 +1,197 @@
+//
+//  PrefixHeader.pch
+//  Opt_master
+//
+//  Created by 瑞宁科技02 on 16/7/7.
+//  Copyright © 2016年 reining. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+// ============================   接口  ========================================
+//#define BASE_URL @"https://app.mpub.cn"
+//42.96.200.90/masters-ssm
+// https://app.mpub.cn/masters/swagger-ui.html
+#define APP_NAME @"masters"
+
+
+//#define APP_NAME @"/"
+#define BASE_URL @"http://192.168.0.102:8088"
+#define PICTURE_URL @""
+
+
+#define BASE_URL_HEAD [NSString stringWithFormat:@"%@",BASE_URL]
+
+#define URL_NEWS_LIST [NSString stringWithFormat:@"%@",@"news/page/"]
+
+#define  URL_TOPIC_LIST  [NSString stringWithFormat:@"%@",@"topic/page/"]      /*问题列表*/
+
+#define  URL_TOPIC_NEW  [NSString stringWithFormat:@"%@",@"topic/new/images" ]     /*问题创建*/
+
+#define  URL_TOPIC_DETAIL  [NSString stringWithFormat:@"%@",@"topic/show/"]  /*问题详情*/
+
+#define  URL_REPLY_LIST  [NSString stringWithFormat:@"%@",@"reply/" ]    /*回答列表*/
+
+#define  URL_REPLY_NEW   [NSString stringWithFormat:@"%@",@"reply/new"]      /*回答添加*/
+
+#define  URL_TAG_LIST [NSString stringWithFormat:@"%@",@"tag/list"]   /*标签接口*/
+
+#define  URL_MY_TOPIC [NSString stringWithFormat:@"%@",@"topic/myask/page/"]  /*我的问答*/
+
+#define  URL_MY_REPLY [NSString stringWithFormat:@"%@",@"topic/myreply/page/"]  /*我的回答*/
+
+#define  URL_MY_COLLECTION [NSString stringWithFormat:@"%@",@"favorite/my/"]    /*我的收藏*/
+
+#define  URL_LOGIN [NSString stringWithFormat:@"%@",@"user/login"]  /*登录*/
+
+#define  URL_REGIST [NSString stringWithFormat:@"%@",@"user/new"]   /*注册*/
+
+#define  URL_USER_UPDATE [NSString stringWithFormat:@"%@",@"user/update"]  /*用户信息更新*/
+
+#define  URL_USER_UPDATE_TAGS [NSString stringWithFormat:@"%@",@"user/update/tags"]   /*用户标签更新*/
+
+#define  URL_FEEDBACK  [NSString stringWithFormat:@"%@",@"feedback/new/images/v2"]    /*用户反馈*/
+
+#define  URL_USER_AVATAR [NSString stringWithFormat:@"%@",@"user/avatar/upload/v3"]   /*上传头像*/
+
+#define  URL_USER_SHOW [NSString stringWithFormat:@"%@",@"user/show/"]  /*用户信息*/
+
+#define  URL_USER_CHANGEPWD [NSString stringWithFormat:@"%@",@"user/change/"]   /*修改密码*/
+
+#define  URL_TOPIC_STATE_SHOW  [NSString stringWithFormat:@"%@",@"favorite/state/show?category=topic&itemid"] /*问题是否收藏*/
+
+#define  URL_NEWS_STATE_SHOW [NSString stringWithFormat:@"%@",@"favorite/state/show?category=news&itemid"]  /*新闻是否收藏*/
+
+#define  URL_TOPIC_STATE_CHANGE [NSString stringWithFormat:@"%@",@"favorite/state/change?category=topic&itemid"] /*问题收藏状态改变*/
+
+#define  URL_NEWS_STATE_CHANGE [NSString stringWithFormat:@"%@",@"favorite/state/change?category=news&itemid"] /*问题收藏状态改变*/
+
+#define URL_VERSION [NSString stringWithFormat:@"%@",@"version/show/latest"]
+
+#define URL_AD [NSString stringWithFormat:@"%@",@"advertisement/show/1"]
+
+#define URL_certification [NSString stringWithFormat:@"%@",@"certification/upload/"]
+
+#define URL_certification_new [NSString stringWithFormat:@"%@",@"certification/new"]
+
+#define URL_Mycertification_list [NSString stringWithFormat:@"%@",@"certification/mylist"]
+
+#define URL_Mycertification_DEL [NSString stringWithFormat:@"%@",@"certification/delete?ids="]
+
+//
+// ============================= 样式 =====================================
+
+#define SECRETKEY @"123456"
+
+
+// 主色
+
+///RGB(42,53,66)
+#define PRIMARY_COLOR UIColorARGB(1,55,75,112)
+#define Navigation_COLOR UIColorARGB(1,255,255,255)
+
+#define Primary_COLOR [UIColor colorWithRed:136/255.0 green:207/255.0 blue:255/255.0 alpha:1]
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
+// 分割线
+#define SEPARATOR_LINE_HEIGHT 0.5
+
+#define SEPARATOR_LINE_COLOR UIColorARGB(1,229,229,229)
+
+
+// button样式
+#define BTN_BORDER_WIDTH 0.5
+
+#define BTN_BORDER_COLOR UIColorARGB(1,204,204,204)
+
+#define BG_COLOR UIColorARGB(1,242,242,242)
+
+#define BTN_HEIGHT 40
+
+#define BTN_CORNER_RADIUS 4
+
+
+// label样式
+#define LABLE_HEIGHT 20
+
+#define TEXT_FONT @"Helvetica"
+
+// 字体样式
+#define TXT_MAIN_FONT [UIFont fontWithName:@"Helvetica" size:16]
+#define TXT_SUB_FONT [UIFont fontWithName:@"Helvetica" size:13]
+#define TXT_COLOR UIColorARGB(1,153,153,153)
+#define TXT_MAIN_COLOR UIColorARGB(1,51,51,51)
+
+
+
+#define GZFont       @"Helvetica"
+#define GZFontLight      @"Helvetica-Light"
+#define GZFontBold   @"Helvetica-Bold"
+#define WeiXinFont @"Heiti-SC-Thin"
+#define WeiXinFontWithSize(siz) [UIFont fontWithName:WeiXinFont size:siz]
+#define GZFontWithSize(siz) [UIFont fontWithName:GZFont size:siz]
+#define GZFontBoldWithSize(siz) [UIFont fontWithName:GZFontBold size:siz]
+#define GZFontLightWithSize(siz) [UIFont fontWithName:GZFontLight size:siz]
+
+#define NAME_COLOR UIColorARGB(1,2,2,2)
+#define NAME_FONT [UIFont fontWithName:@"Helvetica" size:17]
+#define BTN_FONT [UIFont fontWithName:@"Helvetica" size:15]
+#define BTN_COLOR UIColorARGB(1,85,85,85)
+#define BG UIColorARGB(1,241,242,247)
+
+#define MY_ARRAY [NSMutableArray arrayWithObjects:@"故障单已发布",@"故障单受理中",@"故障单已完成",@"故障单已确认",@"故障单已关闭", nil]
+#define LEVEL_ARRAY [NSMutableArray arrayWithObjects:@"警告",@"一般",@"重要",@"紧急",@"全部", nil]
+#define ERROR_MESSAGE @"访问服务器失败"
+#define ERROR_NETWORK @"请检查网络连接"
+#define FailLoginMessage @"该账户在别处登录,请重新登录!"
+#define UIColorARGB(a,r,g,b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
+// 图片
+#define IMG(name) [UIImage imageNamed:name]
+/**
+ *  屏幕宽度和高度
+ */
+#define SCREEN_W [UIScreen mainScreen].bounds.size.width/375
+#define SCREEN_H [UIScreen mainScreen].bounds.size.height/375
+// Navigation
+#define NaviBarHeight 64
+// 默认间隔
+#define DEFUALT_MARGIN_SIDES 12
+#define GAP 10
+#define BTN_height 30
+
+/**
+ *  手机版本
+ */
+#define PHONE4S [UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO
+
+#define PHONE5S [UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO
+
+#define PHONE6 [UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(750, 1334), [[UIScreen mainScreen] currentMode].size) : NO
+
+#define PHONE6P [UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2208), [[UIScreen mainScreen] currentMode].size) : NO
+
+#define ViewWidth self.frame.size.width
+#define ViewHeight self.frame.size.height
+
+#define kHeight [[UIScreen mainScreen] bounds].size.height
+#define kWidth  [[UIScreen mainScreen] bounds].size.width
+#define CURRENT_VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
+
+
+// --------------- NSLog ------------
+#ifdef DEBUG
+#define DLog(fmt,...)NSLog((@"[文件名:%s]\n""[函数名:%s]\n""[行号:%d] \n"fmt),__FILE__,__FUNCTION__,__LINE__,##__VA_ARGS__);
+#else
+#define DLog(...);
+#endif
+#import "Masonry.h"
+#import "UIView+SDAutoLayout.h"
+#import "Reachability.h"
+#import "MBProgressHUD.h"
+#import "MJRefresh.h"
+#import "HttpTool.h"
+#import "UIImageView+WebCache.h"
+#import "UIView+WHC_AutoLayout.h"
+
+
+#endif /* PrefixHeader_pch */

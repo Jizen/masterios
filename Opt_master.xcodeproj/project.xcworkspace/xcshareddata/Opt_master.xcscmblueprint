@@ -1,0 +1,32 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "FD5665432345B5BAE38D9649B86072870F66FE60",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "65a8441e-ee94-d645-a8f4-8b0171691d4d++2157" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "FD5665432345B5BAE38D9649B86072870F66FE60" : 9223372036854775807,
+    "65a8441e-ee94-d645-a8f4-8b0171691d4d++2157" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "245FC313-CA75-4765-9AFF-3DA8C643B5EC",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "FD5665432345B5BAE38D9649B86072870F66FE60" : "masterios\/",
+    "65a8441e-ee94-d645-a8f4-8b0171691d4d++2157" : "Opt_master2016-8-10\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Opt_master",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Opt_master.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/192.168.0.199\/svn\/dev",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "65a8441e-ee94-d645-a8f4-8b0171691d4d++2157"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Jizen\/masterios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "FD5665432345B5BAE38D9649B86072870F66FE60"
+    }
+  ]
+}
