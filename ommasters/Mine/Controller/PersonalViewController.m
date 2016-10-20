@@ -327,7 +327,7 @@
         _navBar.backgroundColor = [UIColor clearColor];
         _navBar.alpha = 1;
         [_backBtn setImage:[UIImage imageNamed:@"return_w"] forState:(UIControlStateNormal)];
-        _titleLabel.hidden = YES;
+//        _titleLabel.hidden = YES;
         self.line.hidden = YES;
 
 

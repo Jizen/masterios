@@ -16,14 +16,14 @@ static NSString *UMSplatformTypeKey = @"UMSplatformTypeKey";
 static NSString *UMSSharePlatformTypeKey = @"UMSSharePlatformTypeKey";
 static NSString *UMSSharePlatformIconNameKey = @"UMSSharePlatformIconNameKey";
 
-#define UMSocial_Max_Row_Count 2 //最大行数（计算高度时会用到）
+#define UMSocial_Max_Row_Count 3 //最大行数（计算高度时会用到）
 #define UMSocial_Item_Count_PerRow 4 //列数 （计算高度时会用到）
 #define UMSocial_Line_Space 10 //行间距（计算高度时会用到）
 
 #define UMSocial_Item_Width 70
 #define UMSocial_Left_Space 0
 #define UMSocial_Menu_CornerRadius 0
-#define UMSocial_MenuAndCancel_Space 10
+#define UMSocial_MenuAndCancel_Space 0
 #define UMSocial_BgGray_View_Alpha 0.3
 
 @interface UMSocialShareSelectionView ()<UICollectionViewDataSource, UICollectionViewDelegate>
@@ -409,15 +409,16 @@ static NSString *UMSSharePlatformIconNameKey = @"UMSSharePlatformIconNameKey";
         frame.origin.y = self.superview.frame.size.height - frame.size.height - self.cancelButton.frame.size.height - UMSocial_MenuAndCancel_Space;
         self.frame = frame;
 
-        CGRect cancelButtonFrame = self.cancelButton.frame;
-        cancelButtonFrame.size.width = self.frame.size.width;
-        cancelButtonFrame.origin.y = self.superview.frame.size.height-cancelButtonFrame.size.height;
-        self.cancelButton.frame = cancelButtonFrame;
-        self.backgroundGrayView.alpha = UMSocial_BgGray_View_Alpha;
-        
-    } completion:^(BOOL finished) {
+           } completion:^(BOOL finished) {
         
     }];
+//    CGRect cancelButtonFrame = self.cancelButton.frame;
+    cancelButtonFrame.size.width = self.frame.size.width;
+    cancelButtonFrame.origin.y = self.superview.frame.size.height-cancelButtonFrame.size.height;
+    self.cancelButton.frame = cancelButtonFrame;
+    self.backgroundGrayView.alpha = UMSocial_BgGray_View_Alpha;
+    
+
 }
 
 //隐藏视图
@@ -431,16 +432,17 @@ static NSString *UMSSharePlatformIconNameKey = @"UMSSharePlatformIconNameKey";
         frame.origin.y = self.superview.frame.size.height;
         self.frame = frame;
         
-        CGRect cancelFrame = self.cancelButton.frame;
-        cancelFrame.origin.y = self.superview.frame.size.height*2-cancelFrame.size.height;
-        self.cancelButton.frame = cancelFrame;
-        
-        self.backgroundGrayView.alpha = 0;
-        
-    } completion:^(BOOL finished) {
+           } completion:^(BOOL finished) {
         [self.backgroundGrayView removeFromSuperview];
         [self removeFromSuperview];
     }];
+    CGRect cancelFrame = self.cancelButton.frame;
+    cancelFrame.origin.y = self.superview.frame.size.height*2-cancelFrame.size.height;
+    self.cancelButton.frame = cancelFrame;
+    
+    self.backgroundGrayView.alpha = 0;
+    
+
 }
 
 

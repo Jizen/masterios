@@ -10,9 +10,10 @@
 
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width
 #define ScreenHeight [[UIScreen mainScreen] bounds].size.height
-#define shareNameArray @[@"微信",@"朋友圈",@"新浪微博",@"QQ",@"QQ空间"]
-#define shareImageArray @[@"share_微信",@"share_朋友圈",@"share_微博",@"share_qq",@"share_QQ空间"]
+#define shareNameArray @[@"微信",@"朋友圈",@"邮件",@"QQ",@"QQ空间"]
+#define shareImageArray @[@"share_微信",@"share_朋友圈",@"sns_icon_2",@"share_qq",@"share_QQ空间"]
 @interface shareManager : NSObject
+@property (nonatomic, assign) BOOL isText;
 
 // 分享视图背景
 @property (nonatomic, strong) UIView *shareBgView;
@@ -33,8 +34,9 @@
  *  @param image   分享的图片
  *  @param url     分享的urlString
  */
-- (void)setShareVC:(UIViewController *)vc content:(NSString *)content image:(UIImage *)image url:(NSString *)url;
+- (void)setShareVC:(UIViewController *)vc content:(NSString *)content image:(NSString *)image url:(NSString *)url;
 
+- (void)setSharecontent:(NSString *)content;
 /**
  *  显示分享视图
  */

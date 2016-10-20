@@ -141,10 +141,75 @@
 //        [weakSelf shareDataWithPlatform:platformType];
 //        
 //    }];
+    
+    
+    
+    
     [shareView setShareVC:self content:self.sharetitle image:self.picture  url:self.url];
+    
+//    [shareView setSharecontent:self.sharetitle];
     [shareView show];
-
+//
 }
+
+- (void)disMissShareMenuView
+{
+    self.contentBgView.hidden = NO;
+}
+
+//创建分享内容对象
+- (UMSocialMessageObject *)creatMessageObject
+{
+    //创建分享消息对象
+    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+    NSString *title = @"运维专家";
+    NSString *url = @"http://www.baidu.com";//@"http://wsq.umeng.com";
+    NSString *text = self.sharetitle;
+    
+//    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:title descr:text thumImage:self.picture];
+//    [shareObject setWebpageUrl:url];
+//    messageObject.shareObject = shareObject;
+//    
+    messageObject.text = self.sharetitle;
+    return messageObject;
+}
+
+//直接分享
+- (void)shareDataWithPlatform:(UMSocialPlatformType)platformType
+{
+    
+    UMSocialMessageObject *messageObject = [self creatMessageObject];
+    //调用分享接口
+    
+    [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:nil completion:^(id data, NSError *error) {
+        
+        
+        
+        
+        NSString *message = nil;
+        if (!error) {
+            message = [NSString stringWithFormat:@"分享成功"];
+        }
+        else{
+            if (error) {
+                message = [NSString stringWithFormat:@"失败原因Code: %d\n",(int)error.code];
+            }
+            else{
+                message = [NSString stringWithFormat:@"分享失败"];
+            }
+        }
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"share"
+                                                        message:message
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"确定", nil)
+                                              otherButtonTitles:nil];
+        [alert show];
+    }];
+    
+    
+}
+
+
 // 收藏按钮
 - (void)collectionAction:(UIButton *)button{
     button.selected = !button.selected;

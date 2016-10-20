@@ -8,10 +8,10 @@
 
 #import "shareManager.h"
 #import "shareManager+shareView.h"
-#import "UMSocialSmsHandler.h"
 #import <UMSocialCore/UMSocialCore.h>
 
 @implementation shareManager{
+    
     UIViewController *_shareVC;
     NSString *_content;
     NSString *_image;
@@ -53,10 +53,15 @@
 - (void)setShareVC:(UIViewController *)vc content:(NSString *)content image:(NSString *)image url:(NSString *)url{
     _shareVC = vc;
     _content = content;
-//    _image = image;
-//    _url = url;
+    _image = image;
+    _url = url;
 }
 
+-(void)setSharecontent:(NSString *)content{
+ 
+    _content = content;
+
+}
 - (void)show{
     self.shareBgView.hidden = NO;
     [UIView animateWithDuration:0.3 animations:^{
@@ -81,15 +86,21 @@
     [self hiddenShareView];
     if (sender.tag == 0) {
         [self shareDataWithPlatform:UMSocialPlatformType_WechatSession];
-
-        
     }else if (sender.tag == 1) {
-        [self shareDataWithPlatform:UMSocialPlatformType_Sms];
-
+        [self shareDataWithPlatform:UMSocialPlatformType_WechatTimeLine];
     }else if (sender.tag == 2) {
-
-    }else{
+        self.isText = YES;
+        [self shareDataWithPlatform:UMSocialPlatformType_Sms];
         
+//        UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+//        messageObject.text = @"1123123123";
+//        [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_Sms messageObject:messageObject currentViewController:self completion:^(id result, NSError *error) {
+//            
+//        }];
+ }else if (sender.tag == 3){
+        [self shareDataWithPlatform:UMSocialPlatformType_QQ];
+    }else{
+        [self shareDataWithPlatform:UMSocialPlatformType_Qzone];
 
     }
 
@@ -99,10 +110,21 @@
 {
     //创建分享消息对象
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
-    NSString *title = @"运维专家";
-    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:title descr:  _content thumImage:_image];
-    [shareObject setWebpageUrl:_url];
-    messageObject.shareObject = shareObject;
+
+    
+    
+    
+    if (self.isText) {
+        //纯文本分享
+        messageObject.text = _content ;
+    }else{
+        NSString *title = @"运维专家";
+        UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:title descr:  _content thumImage:_image];
+        [shareObject setWebpageUrl:_url];
+        messageObject.shareObject = shareObject;
+    }
+
+    
     return messageObject;
 }
 
@@ -112,7 +134,7 @@
     
     UMSocialMessageObject *messageObject = [self creatMessageObject];
     //调用分享接口
-    [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+    [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:_shareVC completion:^(id data, NSError *error) {
         
         NSString *message = nil;
         if (!error) {
@@ -137,5 +159,8 @@
     
     
 }
+
+
+
 
 @end

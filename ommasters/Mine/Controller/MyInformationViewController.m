@@ -202,7 +202,11 @@ typedef NS_ENUM(NSInteger, PhotoType)
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
-        [self tapAction];
+         [self tapAction];
+        
+        
+        
+        
     }else if (indexPath.row == 1) {
 
         NameViewController *name = [[NameViewController alloc] init];
@@ -247,6 +251,12 @@ typedef NS_ENUM(NSInteger, PhotoType)
 }
 - (void)tapAction{
     
+    //解决iOS8在调用系统相机拍照时，会有一两秒的停顿，然后再弹出UIImagePickConroller的问题
+    if([[[UIDevice currentDevice] systemVersion] floatValue]>=8.0) {
+        
+        self.modalPresentationStyle=UIModalPresentationOverCurrentContext;
+        
+    }
 
     NSString *otherButtonTitle = NSLocalizedString(@"从手机相册选择", nil);
     NSString *otherButtonTitle1 = NSLocalizedString(@"拍照", nil);

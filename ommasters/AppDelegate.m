@@ -94,7 +94,7 @@ static AppDelegate *_appDelegate;
     
 
     
-    [[UMSocialManager defaultManager] removePlatformProviderWithPlatformType:UMSocialPlatformType_Sms];
+//    [[UMSocialManager defaultManager] removePlatformProviderWithPlatformType:UMSocialPlatformType_Sms];
     [[UMSocialManager defaultManager] removePlatformProviderWithPlatformType:UMSocialPlatformType_Qzone];
     [[UMSocialManager defaultManager] removePlatformProviderWithPlatformType:UMSocialPlatformType_TencentWb];
     [[UMSocialManager defaultManager] removePlatformProviderWithPlatformType:UMSocialPlatformType_WechatFavorite];
@@ -109,6 +109,17 @@ static AppDelegate *_appDelegate;
     }
     return result;
 }
+
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url];
+    if (!result) {
+        
+    }
+    return result;
+}
+
 - (void)showad{
     
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
