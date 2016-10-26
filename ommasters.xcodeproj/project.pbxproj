@@ -264,6 +264,8 @@
 		E0C1DFA81DACA23F009842F1 /* TZPhotoPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C1DF9B1DACA23F009842F1 /* TZPhotoPreviewController.m */; };
 		E0C1DFA91DACA23F009842F1 /* TZVideoPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C1DF9D1DACA23F009842F1 /* TZVideoPlayerController.m */; };
 		E0C1DFAA1DACA23F009842F1 /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C1DF9F1DACA23F009842F1 /* UIView+Layout.m */; };
+		E0C688991DBE0D8200A67116 /* mail.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C688971DBE0D8200A67116 /* mail.png */; };
+		E0C6889A1DBE0D8200A67116 /* message.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C688981DBE0D8200A67116 /* message.png */; };
 		E0D283111DAE3DB3000344E3 /* HXEasyCustomShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D2830E1DAE3DB3000344E3 /* HXEasyCustomShareView.m */; };
 		E0D283121DAE3DB3000344E3 /* HXShareScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D283101DAE3DB3000344E3 /* HXShareScrollView.m */; };
 		E0D66DFA1DAFAF0E0081137C /* CLShareButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D66DEF1DAFAF0E0081137C /* CLShareButton.m */; };
@@ -779,6 +781,8 @@
 		E0C1DF9D1DACA23F009842F1 /* TZVideoPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZVideoPlayerController.m; sourceTree = "<group>"; };
 		E0C1DF9E1DACA23F009842F1 /* UIView+Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Layout.h"; sourceTree = "<group>"; };
 		E0C1DF9F1DACA23F009842F1 /* UIView+Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Layout.m"; sourceTree = "<group>"; };
+		E0C688971DBE0D8200A67116 /* mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mail.png; sourceTree = "<group>"; };
+		E0C688981DBE0D8200A67116 /* message.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = message.png; sourceTree = "<group>"; };
 		E0D2830D1DAE3DB3000344E3 /* HXEasyCustomShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HXEasyCustomShareView.h; sourceTree = "<group>"; };
 		E0D2830E1DAE3DB3000344E3 /* HXEasyCustomShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HXEasyCustomShareView.m; sourceTree = "<group>"; };
 		E0D2830F1DAE3DB3000344E3 /* HXShareScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HXShareScrollView.h; sourceTree = "<group>"; };
@@ -865,7 +869,6 @@
 			isa = PBXGroup;
 			children = (
 				E0771B2A1DAC8D3A006D128F /* Others */,
-				E0771AA51DAC8D3A006D128F /* Framework */,
 				E0771AA61DAC8D3A006D128F /* Hepler */,
 				E0771AB71DAC8D3A006D128F /* Login */,
 				E0771ADE1DAC8D3A006D128F /* Macros */,
@@ -905,13 +908,6 @@
 				E0771A991DAC8C4B006D128F /* Info.plist */,
 			);
 			path = ommastersUITests;
-			sourceTree = "<group>";
-		};
-		E0771AA51DAC8D3A006D128F /* Framework */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Framework;
 			sourceTree = "<group>";
 		};
 		E0771AA61DAC8D3A006D128F /* Hepler */ = {
@@ -2092,6 +2088,8 @@
 		E0D66DF41DAFAF0E0081137C /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E0C688971DBE0D8200A67116 /* mail.png */,
+				E0C688981DBE0D8200A67116 /* message.png */,
 				E0D66DF51DAFAF0E0081137C /* share_qq@2x.png */,
 				E0D66DF61DAFAF0E0081137C /* share_QQ空间@2x.png */,
 				E0D66DF71DAFAF0E0081137C /* share_微信@2x.png */,
@@ -2215,12 +2213,14 @@
 				E0771D6C1DAC8D3B006D128F /* 上传证书正面.png in Resources */,
 				E0D66DFF1DAFAF0E0081137C /* share_微信@2x.png in Resources */,
 				E0771D151DAC8D3B006D128F /* area.db in Resources */,
+				E0C688991DBE0D8200A67116 /* mail.png in Resources */,
 				E0D66E001DAFAF0E0081137C /* share_微博@2x.png in Resources */,
 				E0771D811DAC8D3B006D128F /* entry@2x.png in Resources */,
 				E0771D721DAC8D3B006D128F /* 引导页03.png in Resources */,
 				E0771D6E1DAC8D3B006D128F /* 上传身份证正面.png in Resources */,
 				E0771D711DAC8D3B006D128F /* 引导页02.png in Resources */,
 				E0BFC3B71DACC6990048A446 /* common_del_circle@3x.png in Resources */,
+				E0C6889A1DBE0D8200A67116 /* message.png in Resources */,
 				E0771D851DAC8D3B006D128F /* sign-in.png in Resources */,
 				E0771D401DAC8D3B006D128F /* icon_homepage_downArrow@2x.png in Resources */,
 				E0771D861DAC8D3B006D128F /* sign-in@2x.png in Resources */,

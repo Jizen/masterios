@@ -55,8 +55,6 @@
     [super viewDidLoad];
     [self setupView];
     [self createNavBar];
-//    [self requestData];
-
 }
 #pragma mark -UI
 -(void)createNavBar{

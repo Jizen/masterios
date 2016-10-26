@@ -10,8 +10,8 @@
 
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width
 #define ScreenHeight [[UIScreen mainScreen] bounds].size.height
-#define shareNameArray @[@"微信",@"朋友圈",@"邮件",@"QQ",@"QQ空间"]
-#define shareImageArray @[@"share_微信",@"share_朋友圈",@"sns_icon_2",@"share_qq",@"share_QQ空间"]
+#define shareNameArray @[@"微信",@"朋友圈",@"邮件",@"短信"]
+#define shareImageArray @[@"share_微信",@"share_朋友圈",@"mail",@"message"]
 @interface shareManager : NSObject
 @property (nonatomic, assign) BOOL isText;
 

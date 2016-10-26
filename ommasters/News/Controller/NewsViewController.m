@@ -15,7 +15,6 @@
 #import <CoreLocation/CoreLocation.h>
 #import "NewsModel.h"
 #import <StoreKit/StoreKit.h>
-
 #define CURRENT_VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
 #define BUNDLE_IDENTIFIER [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"]
 int    currentPagerOrder = 1;
@@ -38,6 +37,9 @@ int    currentCollectionPagerOrder1 = 1;
 @property (nonatomic ,strong)NSMutableArray *topicArray;
 
 @property (nonatomic ,strong)NewsModel *model;
+
+
+
 @end
 
 @implementation NewsViewController
@@ -198,6 +200,8 @@ int    currentCollectionPagerOrder1 = 1;
         [self.tableView.mj_footer endRefreshing];
     }];
 }
+
+
 
 - (void)setupMJRefreshHeader{
     [self.dataArray removeAllObjects];

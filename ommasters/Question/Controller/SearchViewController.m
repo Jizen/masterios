@@ -45,13 +45,22 @@ int    searchPage = 1;
 #pragma mark - basic
 - (void)viewWillAppear:(BOOL)animated{
     searchPage = 1;
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
+//    [super viewWillAppear:animated];
+//    [self.searchBar becomeFirstResponder];
+
+
+//    self.navigationController.navigationBarHidden = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [self.searchBar becomeFirstResponder];
+
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavBar];
+
     [self initTableView];
     [self refreshMoreData];
 
@@ -59,7 +68,10 @@ int    searchPage = 1;
     tapGestureRecognizer.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tapGestureRecognizer];
 }
-
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.searchBar resignFirstResponder];
+}
 - (void)keyboardHide:(UITapGestureRecognizer *)tap{
     [self.searchBar resignFirstResponder];
 
@@ -83,6 +95,8 @@ int    searchPage = 1;
     _searchBar.backgroundImage = [self imageWithColor:[UIColor whiteColor] size:_searchBar.bounds.size];
     self.searchBar.delegate = self;
     self.searchBar.placeholder = @"请输入问题关键字";
+//    [_searchBar becomeFirstResponder];
+
     self.searchBar.searchBarStyle = UISearchBarStyleDefault;
     [topback addSubview:self.searchBar];
     [navBar addSubview:topback];
@@ -171,6 +185,7 @@ int    searchPage = 1;
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     [searchBar resignFirstResponder];
+    [self.noMessageLabel removeFromSuperview];
     [self setupProgressHud];
 
     [self requestDataWithPage:1 condition:searchBar.text];
@@ -275,9 +290,9 @@ int    searchPage = 1;
             [self.tableView.mj_header endRefreshing];
             [self.tableView.mj_footer endRefreshing];
             
-            [self.hud hideAnimated:YES];
+            [self.hud removeFromSuperview];
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            [self.hud hideAnimated:YES];
+            [self.hud removeFromSuperview];
             [self.tableView.mj_header endRefreshing];
             [self.tableView.mj_footer endRefreshing];
 

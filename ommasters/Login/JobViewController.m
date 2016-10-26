@@ -42,6 +42,7 @@
 @end
 
 @implementation JobViewController
+#pragma mark - lazy
 -(NSMutableArray *)array{
     if (!_array) {
         _array =[NSMutableArray array];
@@ -63,16 +64,8 @@
     [self.view addGestureRecognizer:tapGestureRecognizer];
 
 }
-- (void)test{
-    [self.perfessionView.name resignFirstResponder];
 
-}
--(void)keyboardHide:(UITapGestureRecognizer*)tap{
-    [self.perfessionView.name resignFirstResponder];
-
-}
-
-#pragma mark - Ui
+#pragma mark - UI
 -(void)createNavBar{
     UIView *navBar = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kWidth, 64)];
     navBar.backgroundColor = Navigation_COLOR;
@@ -98,7 +91,6 @@
 
 }
 
-#pragma mark - ui
 - (void)initTableView{
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, self.view.bounds.size.height-NaviBarHeight) style:UITableViewStylePlain];
     self.tableView.backgroundColor = BG;
@@ -159,7 +151,7 @@
     self.tableView.tableHeaderView = self.topView;
 }
 
-
+#pragma mark - action
 - (void)leftAction{
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -172,6 +164,15 @@
     [self.view addSubview:picker];
 
 }
+- (void)test{
+    [self.perfessionView.name resignFirstResponder];
+    
+}
+-(void)keyboardHide:(UITapGestureRecognizer*)tap{
+    [self.perfessionView.name resignFirstResponder];
+    
+}
+
 #pragma mark - delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -244,12 +245,11 @@
     
     return view;
 }
+#pragma mark - request
 - (void)requestData{
     NSString *url = [NSString stringWithFormat:@"/tag/list"];
     
     [[HttpTool shareManager] POST:url parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"获取标签接口返回数据 === %@",responseObject);
-        
         for (NSDictionary *dict  in responseObject) {
             NSError* err=nil;
             _model = [[TagModel alloc]initWithDictionary:dict error:&err];
@@ -258,8 +258,6 @@
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"eerrore = %@",error);
-        
     }];
     
 }
@@ -303,12 +301,10 @@
     NSString *string = [self.yearView.name.text substringToIndex:index-1];
     NSDictionary *topic = @{@"vocation":self.perfessionView.name.text,@"experience":string };
     [[HttpTool shareManager] POST:URL_USER_UPDATE parameters:topic success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"修改资料 结果= %@",responseObject);
         NSNumber *code = responseObject[@"code"];
         if ([code isEqualToNumber:@200]) {
             MyTagViewController *detail = [[MyTagViewController alloc] init];
              detail.secondTitleArr = self.array;
-            NSLog(@"标签 === %@",self.array);
             self.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:detail animated:YES];
 

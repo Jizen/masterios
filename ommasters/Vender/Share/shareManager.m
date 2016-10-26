@@ -85,20 +85,19 @@
 - (void)shareAction:(UIButton *)sender{
     [self hiddenShareView];
     if (sender.tag == 0) {
+        self.isText = NO;
+
         [self shareDataWithPlatform:UMSocialPlatformType_WechatSession];
     }else if (sender.tag == 1) {
+        self.isText = NO;
         [self shareDataWithPlatform:UMSocialPlatformType_WechatTimeLine];
     }else if (sender.tag == 2) {
         self.isText = YES;
+        [self shareDataWithPlatform:UMSocialPlatformType_Email];
+    }else if (sender.tag == 3){
+        self.isText = YES;
+
         [self shareDataWithPlatform:UMSocialPlatformType_Sms];
-        
-//        UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
-//        messageObject.text = @"1123123123";
-//        [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_Sms messageObject:messageObject currentViewController:self completion:^(id result, NSError *error) {
-//            
-//        }];
- }else if (sender.tag == 3){
-        [self shareDataWithPlatform:UMSocialPlatformType_QQ];
     }else{
         [self shareDataWithPlatform:UMSocialPlatformType_Qzone];
 
@@ -143,7 +142,9 @@
         }
         else{
             if (error) {
-                message = [NSString stringWithFormat:@"失败原因Code: %d\n",(int)error.code];
+//                message = [NSString stringWithFormat:@"失败原因Code: %d\n",(int)error.code];
+                message = [NSString stringWithFormat:@"分享失败"];
+
             }
             else{
                 message = [NSString stringWithFormat:@"分享失败"];

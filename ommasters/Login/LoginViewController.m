@@ -20,7 +20,7 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic ,strong)RKAlertView *RkalertView;
 @property (nonatomic ,strong) UIActivityIndicatorView *activityView;
-
+@property (nonatomic ,copy) NSString *mybaseurl;
 @end
 
 @implementation LoginViewController
@@ -58,20 +58,24 @@
     [self.loginView.logoImage addGestureRecognizer:doubleTapGestureRecognizer];
     
 }
+
+// 双击logo 显示设置服务器地址
 - (void)doubleTap:(UIGestureRecognizer*)gestureRecognizer
 {
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"设置服务端地址" preferredStyle:UIAlertControllerStyleAlert];
     //添加普通输入框
     [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = BASE_URL;
+        
+        NSString *myurl = [[NSUserDefaults standardUserDefaults] objectForKey:@"mybaseurl"];
+        if (myurl.length == 0) {
+            textField.text = BASE_URL;
+        }else{
+            textField.text = myurl;
+        }
+        textField.clearButtonMode = UITextFieldViewModeAlways;
     }];
     
-    //添加普通输入框
-    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-//        textField.placeholder = APP_NAME;
-    }];
-
     //添加取消按钮 UIAlertActionStyleCancel - 文字是蓝色的 只能使用一次
     [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {}]];
     //添加确定按钮 UIAlertActionStyleDefault - 文字是蓝色的 可以添加多个
@@ -80,7 +84,9 @@
             NSString *url = alert.textFields.firstObject.text;
 
 
+            self.mybaseurl = url;
             [user setValue:url forKey:@"baseUrl"];
+            [user setValue:self.mybaseurl forKey:@"mybaseurl"];
 
             [user synchronize];
 
@@ -149,7 +155,6 @@
         [[HttpTool shareManager] POST:url parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
             
             NSNumber *code = responseObject[@"code"];
-            NSLog(@"-----------%@",responseObject);
             if ([code isEqualToNumber:@200]) {
                 
                 NSDictionary *data = responseObject[@"data"];
@@ -192,7 +197,6 @@
 
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             
-            NSLog(@"err = %@",error);
             [self hudWithTitle:@"未能连接到服务器"];
             [self.activityView stopAnimating];
 

@@ -96,7 +96,7 @@
     
     self.headImage.sd_layout
     .centerXEqualToView(self.HeadImgView)
-    .topSpaceToView(self.HeadImgView,50)
+    .topSpaceToView(self.HeadImgView,60)
     .widthIs(80)
     .heightIs(80);
     self.headImage.sd_cornerRadiusFromHeightRatio = @(0.5); // 设置view0的圆角半径为自身高度的0.5倍
@@ -158,7 +158,7 @@
     self.titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWidth/2-50, 30, 100, 20)];
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     _titleLabel.text = @"个人中心";
-    _titleLabel.hidden = YES;
+//    _titleLabel.hidden = YES;
     _titleLabel.textColor = [UIColor whiteColor];
     [_navBar addSubview:_titleLabel];
     
@@ -351,9 +351,14 @@
 }
 - (UIStatusBarStyle)preferredStatusBarStyle{
     if (self.tableView.contentOffset.y > 50) {
+        _titleLabel.textColor = PRIMARY_COLOR;
+
         return UIStatusBarStyleDefault;
 
     }else if (self.tableView.contentOffset.y < 10) {
+        _titleLabel.hidden = NO;
+        _titleLabel.textColor = [UIColor whiteColor];
+
         return UIStatusBarStyleLightContent;
         
     }else{

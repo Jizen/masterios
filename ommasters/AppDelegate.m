@@ -389,6 +389,11 @@ static AppDelegate *_appDelegate;
         }
     }];
 }
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+    [[SDImageCache sharedImageCache] setValue:nil forKey:@"memCache"];
+   
+}
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {

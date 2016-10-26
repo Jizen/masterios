@@ -15,6 +15,7 @@
 @end
 
 @implementation MainTabbarViewController
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -38,13 +39,11 @@
     UINavigationController *nav  = [[UINavigationController alloc] initWithRootViewController:vc];
     vc.title = title;
     [self addChildViewController:nav ];
-    //     设置子控制器的tabBarItem
-    
-        NSMutableDictionary *textArrays = [NSMutableDictionary dictionary];
-        textArrays[NSForegroundColorAttributeName] = PRIMARY_COLOR;
-        [nav.tabBarItem setTitleTextAttributes:textArrays forState:UIControlStateNormal];
-//        [nav.tabBarItem setTitleTextAttributes:textArrays forState:UIControlStateHighlighted];
-    
+
+    NSMutableDictionary *textArrays = [NSMutableDictionary dictionary];
+    textArrays[NSForegroundColorAttributeName] = PRIMARY_COLOR;
+    [nav.tabBarItem setTitleTextAttributes:textArrays forState:UIControlStateNormal];
+
     nav.tabBarItem.title         = title;
     nav.tabBarItem.image         = [[UIImage imageNamed:image] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     nav.tabBarController.tabBar.tintColor = PRIMARY_COLOR;

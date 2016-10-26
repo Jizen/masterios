@@ -9,13 +9,13 @@
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
 // ============================   接口  ========================================
-#define BASE_URL @"https://app.mpub.cn"
+//#define BASE_URL @"https://app.mpub.cn"
 // https://app.mpub.cn/masters/swagger-ui.html
 #define APP_NAME @"masters"
 
 
 //#define APP_NAME @"/"
-//#define BASE_URL @"http://192.168.0.104:8088"
+#define BASE_URL @"http://192.168.0.114:8088"
 #define PICTURE_URL @""
 
 

@@ -23,6 +23,8 @@
             baseUrl = BASE_URL;
         }
 
+    
+    NSLog(@"bbbbb = %@",baseUrl);
 
 
     manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",baseUrl,APP_NAME]]];

@@ -33,6 +33,8 @@
     [self.shareView addSubview:shareLeLabel];
     
     CGFloat itemWidth = 75.0f;
+//    CGFloat itemWidth = kWidth/shareNameArray.count;
+
     UIScrollView * shareScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(shareLeLabel.frame)+20, ScreenWidth, 80)];
     shareScrollView.contentSize = CGSizeMake(itemWidth*shareNameArray.count, 0);
     shareScrollView.showsVerticalScrollIndicator = NO;
